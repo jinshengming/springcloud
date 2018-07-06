@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>添加业主</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport"></meta>
+    <meta name="applicable-device" content="pc,mobile"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"></meta>
+    <link rel="stylesheet" type="text/css" href="/css/index/style.css"></link>
+    <link rel="stylesheet" type="text/css" href="/css/commons/bootstrap.min.css"></link>
+    <link rel="stylesheet" type="text/css" href="/css/commons/jquery.datetimepicker.css"></link>
+    <link rel="stylesheet" type="text/css" href="/css/index/jquery.page.css"></link>
+    <link rel="stylesheet" type="text/css" href="/css/commons/xcConfirm.css"></link>
+
+</head>
+<body>
+<div style="margin-top: 90px;">
+    <input type="button" class="button" style="width:90px;" id="newOwnerBtn" value="新增业主"/>&nbsp;&nbsp;&nbsp;
+    <input type="button" class="button" style="width:90px;" id="setPropBtn" value="物业费设置"/>
+</div>
+<input id="pages" type="hidden" th:value="${list.pages}"/>
+<input id="pageNum" type="hidden" th:value="${list.pageNum}"/>
+<br/>
+<div>
+    <table class="bordered" id="owners">
+        <thead>
+        <tr>
+            <th style="width:6%;">业主姓名</th>
+            <th style="width:12%;">身份证号</th>
+            <th style="width:33%;">详细住址</th>
+            <th style="width:8%;">手机号</th>
+            <th style="width:5%;">面积</th>
+            <th style="width:5%;">物业费</th>
+            <th style="width:5%;">车位号</th>
+            <th style="width:5%;">水费</th>
+            <th style="width:10%;">物业费收费日期</th>
+            <th style="width:10%;">操作</th>
+            <th style="display: none; width:1%;"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="owner:${list.list}">
+            <td th:text="${owner.name}"></td>
+            <td th:text="${owner.idCard}"></td>
+            <td th:text="${owner.detailAddress}"></td>
+            <td th:text="${owner.phone}"></td>
+            <td th:text="${owner.roomArea}"></td>
+            <td th:text="${owner.propertyPrice}"></td>
+            <td th:text="${owner.carNum}"></td>
+            <td th:text="${owner.waterPrice}"></td>
+            <td th:text="${#dates.format(owner.propertyFeeDate, 'yyyy-MM-dd')}"></td>
+            <td style="display: none;" th:text="${owner.id}"></td>
+            <td th:text="${owner.simplePrice}" style="display: none;"></td>
+            <td><input type="button" class="button edit" value="编辑"/>&nbsp;&nbsp;&nbsp;
+            <input type="button" class="button del" value="删除"/></td>
+        </tr>
+        </tbody>
+    </table>
+    <div id="page">
+        <div class="next fr">»</div>
+        <div class="last fr">末页</div>
+        <ul class="pagingUl"></ul>
+        <div class="first fr">首页</div>
+        <div class="prv fr">«</div>
+    </div>
+</div>
+<div class="modal fade" id="newOwner" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div style="display: table; width: 100%; height: 100%;">
+        <div style="vertical-align: middle; display: table-cell;">
+            <div class="modal-dialog modal-sm" style="width: 540px;">
+                <div class="modal-content" style="border: none;">
+                    <div class="col-right">
+                        <div class="modal-header">
+                            <button type="button" id="add_close" class="close"
+                                    data-dismiss="modal">
+                                <span aria-hidden="true" id="add_close">×</span><span class="sr-only">Close</span>
+                            </button>
+                            <h4 class="modal-title" id="addModalLabel"
+                                style="font-size: 18px;">业主信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <section class="box-login v5-input-txt" id="box-add">
+                                <form id="add_form" action="#" th:object="${owner}" th:method="post" autocomplete="off">
+                                    <ul>
+                                        <input class="form-control" id="id" th:field="*{id}" type="text"
+                                               style="display: none;"/>
+                                        <div style="float: left; font-size: 15px; margin-top: 8px;">业主姓名：</div>
+                                        <li class="form-group">
+                                            <input class="form-control" maxlength="50" id="name" th:field="*{name}"
+                                                   placeholder="业主姓名" type="text"/>
+                                        </li>
+                                        <div style="float: left; font-size: 15px; margin-top: 8px;">身份证号：</div>
+                                        <li class="form-group">
+                                            <input class="form-control" id="idCard" th:field="*{idCard}"
+                                                   placeholder="身份证号" type="text"/>
+                                        </li>
+                                        <div style="float: left; font-size: 15px; margin-top: 8px;">详细地址：</div>
+                                        <li class="form-group">
+                                            <input class="form-control" id="detailAddress" th:field="*{detailAddress}"
+                                                   placeholder="详细地址" type="text"/>
+                                        </li>
+                                        <div style="float: left; font-size: 15px; margin-top: 8px;">手机号：</div>
+                                        <li class="form-group">
+                                            <input class="form-control" id="phone" th:field="*{phone}" placeholder="手机号"
+                                                   type="text"/>
+                                        </li>
+                                        <div style="float: left; font-size: 15px; margin-top: 8px;">房间面积：</div>
+                                        <li class="form-group">
+                                            <input class="form-control" id="roomArea" th:field="*{roomArea}"
+                                                   placeholder="房间面积" type="text"/>
+                                        </li>
+                                        <div style="float: left; font-size: 15px; margin-top: 8px;">物业费/每平米：</div>
+                                        <li class="form-group">
+                                            <input class="form-control" id="simplePrice" th:field="*{simplePrice}"
+                                                   placeholder="物业费/每平米" type="text"/>
+                                        </li>
+                                        <div style="float: left; font-size: 15px; margin-top: 8px;">物业费：</div>
+                                        <li class="form-group">
+                                            <input class="form-control" id="propertyPrice" th:field="*{propertyPrice}"
+                                                   readonly="readonly" placeholder="面积*物业费单价" type="text"/>
+                                        </li>
+                                        <div style="float: left; font-size: 15px; margin-top: 8px;">车位号：</div>
+                                        <li class="form-group">
+                                            <input class="form-control" id="carNum" th:field="*{carNum}"
+                                                   placeholder="车位号" type="text"/>
+                                        </li>
+                                        <div style="float: left; font-size: 15px; margin-top: 8px;">水费：</div>
+                                        <li class="form-group">
+                                            <input class="form-control" id="waterPrice" th:field="*{waterPrice}"
+                                                   placeholder="水费" type="text"/>
+                                        </li>
+                                        <div style="float: left; font-size: 15px; margin-top: 8px;">物业费收费日期：</div>
+                                        <li class="form-group">
+                                            <input id="datetimepicker2" class="form-control"
+                                                   th:field="*{propertyFeeDate}" placeholder="物业费收费日期" type="text"/>
+                                        </li>
+                                    </ul>
+                                </form>
+                                <div class="login-box marginB10">
+                                    <button id="add_btn" type="button" class="btn btn-micv5 btn-block globalLogin">确定
+                                    </button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="setProp" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div style="display: table; width: 100%; height: 100%;">
+        <div style="vertical-align: middle; display: table-cell;">
+            <div class="modal-dialog modal-sm" style="width: 540px;">
+                <div class="modal-content" style="border: none;">
+                    <div class="col-right">
+                        <div class="modal-header">
+                            <button type="button" id="setProp_close" class="close"
+                                    data-dismiss="modal">
+                                <span aria-hidden="true" id="setprop_Close">×</span><span class="sr-only">Close</span>
+                            </button>
+                            <h4 class="modal-title" id="setPropModalLabel"
+                                style="font-size: 18px;">物业费设置</h4>
+                        </div>
+                        <div class="modal-body">
+                            <section class="box-login v5-input-txt" id="box-setProp">
+                                <form id="setProp_form" action="#" th:object="${property}" autocomplete="off">
+                                    <ul>
+                                        <div style="float: left; font-size: 15px; margin-top: 8px;">单价：</div>
+                                        <li class="form-group">
+                                            <input class="form-control" maxlength="50" id="propertyId" th:field="*{id}"
+                                                   type="hidden"/>
+                                            <input class="form-control" maxlength="50" id="propPrice"
+                                                   th:field="*{propPrice}" placeholder="元/每平米" type="text"/>
+                                        </li>
+                                    </ul>
+                                </form>
+                                <div class="login-box marginB10">
+                                    <button id="set_btn" type="button" class="btn btn-micv5 btn-block globalLogin">确定
+                                    </button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/js/commons/jquery2.2.2.min.js"></script>
+<script type="text/javascript" src="/js/commons/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/commons/common.js"></script>
+<script type="text/javascript" src="/js/commons/jquery.datetimepicker.full.js"></script>
+<script type="text/javascript" src="/js/index/index.js"></script>
+<script type="text/javascript" src="/js/index/jquery.page.js"></script>
+<script type="text/javascript" src="/js/commons/xcConfirm.js"></script>
+
+<script>
+    $.datetimepicker.setLocale('en');
+
+    $('#datetimepicker2').datetimepicker({
+        yearOffset: 0,
+        lang: 'ch',
+        timepicker: false,
+        format: 'Y/m/d',
+        formatDate: 'Y/m/d',
+        maxDate: '+1970/01/01' // and tommorow is maximum date calendar
+    });
+    $(function () {
+        var pages = $("#pages").val();
+        $("#page").Page({
+            totalPages: pages,//分页总数
+            liNums: 7,//分页的数字按钮数(建议取奇数)
+            activeClass: 'activP', //active 类样式定义
+            callBack: function (page) {
+                //console.log(page)
+            }
+        });
+    });
+</script>
+</html>
+
+
+
+
+
+
+
