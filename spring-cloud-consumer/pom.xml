@@ -16,7 +16,7 @@
         <dependency>
             <groupId>com.jsm</groupId>
             <artifactId>spring-cloud-common</artifactId>
-            <version>1.0.0</version>
+            <version>${spring-cloud-common.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

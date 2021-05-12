@@ -32,6 +32,7 @@
         <eureka-client.version>3.0.2</eureka-client.version>
         <eureka-server.version>3.0.2</eureka-server.version>
         <spring-cloud.version>2020.0.2</spring-cloud.version>
+        <spring-cloud-common.version>1.0.0</spring-cloud-common.version>
         <apache.commons.collections.version>4.4</apache.commons.collections.version>
     </properties>
 
