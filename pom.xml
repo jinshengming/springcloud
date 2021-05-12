@@ -27,15 +27,11 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <lombok.version>1.18.20</lombok.version>
         <pagehelper.version>1.3.0</pagehelper.version>
-        <tomcat-jdbc.version>10.0.5</tomcat-jdbc.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
-        <logback-core.version>1.2.3</logback-core.version>
-        <commons-dbcp.version>2.8.0</commons-dbcp.version>
+        <eureka-client.version>3.0.2</eureka-client.version>
+        <eureka-server.version>3.0.2</eureka-server.version>
         <spring-cloud.version>2020.0.2</spring-cloud.version>
-        <logback-classic.version>1.2.3</logback-classic.version>
-        <apache.commons.lang.version>3.12.0</apache.commons.lang.version>
         <apache.commons.collections.version>4.4</apache.commons.collections.version>
     </properties>
 
@@ -49,6 +45,16 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+                <version>${eureka-client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+                <version>${eureka-server.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>

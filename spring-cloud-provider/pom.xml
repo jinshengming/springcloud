@@ -11,6 +11,7 @@
     <version>1.0.0</version>
     <name>spring-cloud-provider</name>
     <description>spring-cloud-provider</description>
+
     <dependencies>
         <dependency>
             <groupId>com.jsm</groupId>
@@ -30,19 +31,7 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-
-
     </dependencies>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
         <finalName>spring-cloud-provider</finalName>
